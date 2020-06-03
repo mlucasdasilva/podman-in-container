@@ -9,5 +9,3 @@ RUN apt-get update -qq \
 
 # To keep it running
 CMD tail -f /dev/null
-
-
