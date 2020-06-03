@@ -1,0 +1,56 @@
+version: "3.3"
+
+services:
+
+#use:  podman --cgroup-manager=cgroupfs --events-backend=file run docker.io/hello-world
+
+  podman:
+    #image: centos:centos7
+    #image: ubuntu:18
+    image: podman-centos7
+    build:
+      context: ./centos7
+      args:
+        - http_proxy=${HTTP_PROXY}
+        - https_proxy=${HTTPS_PROXY}
+        - HTTP_PROXY=${HTTP_PROXY}
+        - HTTPS_PROXY=${HTTPS_PROXY}
+        - no_proxy=${NO_PROXY}
+        - NO_PROXY=${NO_PROXY}
+#        - NEXUS_USER=${NEXUS_USER}
+##        - NEXUS_PASS=${NEXUS_PASS}
+#        - APP_VERSION=${APP_VERSION}
+        - DOCKER_IMAGE_VERSION=${DOCKER_IMAGE_VERSION}
+    privileged: true
+#    network_mode: host
+    labels:
+      net.bndes.department: "ATI/DEGAT/GSAP"
+      net.bndes.servico-url: ""
+# ref.: https://github.com/opencontainers/image-spec/blob/master/annotations.md
+#      org.opencontainers.image.created – date and time on which the image was built (string, date-time as defined by RFC 3339).
+#      org.opencontainers.image.authors – Contact details of the people or organization responsible for the image (freeform string).
+      org.opencontainers.image.authors: "MARLS"
+#      org.opencontainers.image.url – URL to find more information on the image (string).
+#      org.opencontainers.image.documentation – URL to get documentation on the image (string).
+#      org.opencontainers.image.source – URL to get source code for building the image (string).
+#      org.opencontainers.image.version – Version of the packaged software. The version MAY match a label or tag in the source code repository. Version MAY be [Semantic versioning-compatible](http://semver.org/).
+#      org.opencontainers.image.revision – Source control revision identifier for the packaged software.
+#      org.opencontainers.image.vendor – Name of the distributing entity, organization or individual.
+#      org.opencontainers.image.licenses – License(s) under which contained software is distributed as an [SPDX License Expression][spdx-license-expression].
+#      org.opencontainers.image.ref.name – Name of the reference for a target (string).
+#      org.opencontainers.image.title – Human-readable title of the image (string).
+      org.opencontainers.image.title: "dtool - docker tool"
+#      org.opencontainers.image.description – Human-readable description of the software packaged in the image (string).
+      org.opencontainers.image.description: "Container para ferramenta de apoio a orquestracao e deploy de containeres docker"
+    command: tail -f < /dev/null
+    environment:
+        - http_proxy=${HTTP_PROXY}
+        - https_proxy=${HTTPS_PROXY}
+        - HTTP_PROXY=${HTTP_PROXY}
+        - HTTPS_PROXY=${HTTPS_PROXY}
+        - no_proxy=${NO_PROXY}
+        - NO_PROXY=${NO_PROXY}
+    volumes:
+        - /opt/docker/volumes/podman/lib:/var/lib/containers
+        - /opt/docker/volumes/podman/run:/var/run/containers
+
