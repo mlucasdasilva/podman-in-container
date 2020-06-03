@@ -5,5 +5,3 @@ RUN yum -y update  && \
 
 # To keep it running
 CMD tail -f /dev/null
-
-
